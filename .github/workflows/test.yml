@@ -54,4 +54,4 @@ jobs:
         run: npm install
 
       - name: run typescript
-        run: npm run type-check
+        run: npm run type-check-once
