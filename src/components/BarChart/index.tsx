@@ -106,7 +106,7 @@ export const VerticalBarChart = ({
   return (
     <svg
       data-testid="bar-chart-svg"
-      className="vertical-bar-chart__svg"
+      className="vertical-bar-chart"
       ref={svgRef}
       width={400}
       height={300}
