@@ -6,10 +6,20 @@ on:
     branches:
       - main
   pull_request:
-  workflow_dispatch: # 👈 This line enables the manual trigger
 
+  workflow_dispatch:
+    inputs:
+      job_to_run:
+        description: "Which job to run?"
+        required: true
+        default: test
+        type: choice
+        options:
+          - test
+          - types
 jobs:
   test:
+    if: ${{ github.event.inputs.job_to_run == 'test'  }}
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +36,22 @@ jobs:
 
       - name: Run Vitest
         run: npx vitest --coverage
+
+  typescript:
+    if: ${{ github.event.inputs.job_to_run == 'typescript' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: CheckOut code
+        uses: actions/checkout@v3
+
+      - name: setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: run typescript
+        run: npm run type-check
